@@ -2,6 +2,7 @@
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using iText.Layout.Properties;
 
 namespace pdf_add_image
 {
@@ -11,13 +12,13 @@ namespace pdf_add_image
         {
             var src = @"C:\temporal\Contratos\solicitudAlta_otroEjemplo.pdf";
             var dest = @"C:\temporal\Contratos\prueba.pdf";
-            var img = @"C:\temporal\guybrush.png";
+            var img = @"C:\temporal\guybrush.jpeg";
             var txt = "TEXTO PRUEBA";
             var pageIdx = 3;
             var imgX = 100f;
             var imgY = 50f;
-            var txtX = imgX + 100f;
-            var txtY = imgY;
+            var txtX = 0.5;
+            var txtY = imgY + 100f;
             new Program().procesar(src, dest, img, txt, pageIdx, imgX, imgY, txtX, txtY);
         }
         void procesar(string src, string dest, string img, string txt, int pageIdx, float imgX, float imgY, float txtX, float txtY)
@@ -28,9 +29,9 @@ namespace pdf_add_image
             var document = new Document(pdfDest);
 
             var image = new Image(ImageDataFactory.Create(img));
-            image.SetFixedPosition(pageNumber: pageIdx, left: imgX, bottom: imgY, width: 100f);
+            image.SetFixedPosition(pageNumber: pageIdx, left: imgX, bottom: imgY, width: UnitValue.PERCENT);
             var text= new Paragraph(txt);
-            text.SetFixedPosition(pageNumber: pageIdx, left: txtX, bottom: txtY, width: 100f);
+            text.SetFixedPosition(pageNumber: pageIdx, left: txtX, bottom: txtY, width: UnitValue.PERCENT);
             document.Add(image);
             document.Add(text);
             document.Close();
